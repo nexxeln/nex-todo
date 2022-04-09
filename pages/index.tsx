@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Head from "next/head";
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import { Session } from "@supabase/gotrue-js";
 import { supabase } from "../utils/supabaseClient";
@@ -21,6 +22,9 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>nex todo</title>
+      </Head>
       <Header />
       {!session ? <Auth /> : <App />}
     </>
