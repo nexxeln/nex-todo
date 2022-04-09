@@ -6,7 +6,7 @@ export const fetchTodos = async () => {
     .select("*")
     .order("id", true);
 
-  if (error) console.log(error);
+  if (error) return error;
   else return todos;
 };
 
