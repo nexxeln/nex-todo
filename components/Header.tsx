@@ -1,137 +1,64 @@
+import Link from "next/link";
 import {
-  createStyles,
-  Menu,
-  Center,
-  Header,
-  Container,
+  Header as H,
+  Title,
   Group,
+  createStyles,
   Button,
-  Burger,
+  ButtonProps,
 } from "@mantine/core";
-import { useBooleanToggle } from "@mantine/hooks";
-import { FaChevronDown } from "react-icons/fa";
-
-const HEADER_HEIGHT = 60;
+import { VscGithubInverted } from "react-icons/vsc";
+import { supabase } from "../utils/supabaseClient";
 
 const useStyles = createStyles((theme) => ({
   inner: {
-    height: HEADER_HEIGHT,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-  },
-
-  links: {
-    [theme.fn.smallerThan("sm")]: {
-      display: "none",
-    },
-  },
-
-  burger: {
-    [theme.fn.largerThan("sm")]: {
-      display: "none",
-    },
-  },
-
-  link: {
-    display: "block",
-    lineHeight: 1,
-    padding: "8px 12px",
-    borderRadius: theme.radius.sm,
-    textDecoration: "none",
-    color:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[0]
-        : theme.colors.gray[7],
-    fontSize: theme.fontSizes.sm,
-    fontWeight: 500,
-
-    "&:hover": {
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
-    },
-  },
-
-  linkLabel: {
-    marginRight: 5,
+    height: 56,
   },
 }));
 
-interface HeaderActionProps {
-  links: {
-    link: string;
-    label: string;
-    links: { link: string; label: string }[];
-  }[];
+async function signOut() {
+  const { error } = await supabase.auth.signOut();
 }
 
-export function HeaderAction({ links }: HeaderActionProps) {
-  const { classes } = useStyles();
-  const [opened, toggleOpened] = useBooleanToggle(false);
-  const items = links.map((link) => {
-    const menuItems = link.links?.map((item) => (
-      <Menu.Item key={item.link}>{item.label}</Menu.Item>
-    ));
-
-    if (menuItems) {
-      return (
-        <Menu
-          key={link.label}
-          trigger="hover"
-          delay={0}
-          transitionDuration={0}
-          placement="end"
-          gutter={1}
-          control={
-            <a
-              href={link.link}
-              className={classes.link}
-              onClick={(event) => event.preventDefault()}
-            >
-              <Center>
-                <span className={classes.linkLabel}>{link.label}</span>
-                <FaChevronDown size={12} />
-              </Center>
-            </a>
-          }
-        >
-          {menuItems}
-        </Menu>
-      );
-    }
-
-    return (
-      <a
-        key={link.label}
-        href={link.link}
-        className={classes.link}
-        onClick={(event) => event.preventDefault()}
-      >
-        {link.label}
-      </a>
-    );
-  });
-
+function GithubButton(props: ButtonProps<"button">) {
   return (
-    <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }} mb={120}>
-      <Container className={classes.inner} fluid>
-        <Group>
-          <Burger
-            opened={opened}
-            onClick={() => toggleOpened()}
-            className={classes.burger}
-            size="sm"
-          />
-        </Group>
-        <Group spacing={5} className={classes.links}>
-          {items}
-        </Group>
-        <Button radius="xl" sx={{ height: 30 }}>
-          Get early access
-        </Button>
-      </Container>
-    </Header>
+    <Link passHref href="https://github.com/nexxeln">
+      <Button
+        {...props}
+        leftIcon={<VscGithubInverted />}
+        sx={(theme) => ({
+          backgroundColor:
+            theme.colors.dark[theme.colorScheme === "dark" ? 9 : 6],
+          color: "#fff",
+          "&:hover": {
+            backgroundColor:
+              theme.colors.dark[theme.colorScheme === "dark" ? 9 : 6],
+          },
+        })}
+      />
+    </Link>
   );
 }
+
+const Header = () => {
+  const { classes } = useStyles();
+
+  return (
+    <H height="">
+      <Group px={12} className={classes.inner}>
+        <GithubButton>GitHub</GithubButton>
+
+        <Title>NEX TODO</Title>
+
+        <Button color="cyan" onClick={signOut}>
+          Log out
+        </Button>
+      </Group>
+    </H>
+  );
+};
+
+export default Header;
