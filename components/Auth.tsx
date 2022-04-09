@@ -70,9 +70,9 @@ export default function Auth() {
 
         {loaded && (
           <Alert
-            icon={<MdOutlineInfo color="cyan" />}
+            icon={<MdOutlineInfo />}
             title="Check your email!"
-            color="white"
+            color="green"
             pt="lg"
           >
             {" "}
