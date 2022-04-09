@@ -26,7 +26,7 @@ const Home: NextPage = () => {
         <title>nex todo</title>
       </Head>
       <Header />
-      {!session ? <Auth /> : <App />}
+      {!session ? <Auth /> : <App user={supabase.auth.user} />}
     </>
   );
 };
