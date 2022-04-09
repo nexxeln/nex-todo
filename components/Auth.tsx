@@ -74,8 +74,9 @@ export default function Auth() {
             title="Check your email!"
             color="green"
             pt="lg"
+            variant="outline"
           >
-            {" "}
+            A magic link has been sent to your email. Click the link to log in.
           </Alert>
         )}
       </Paper>
