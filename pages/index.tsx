@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import { Header, Title } from "@mantine/core";
+import { Session } from "@supabase/gotrue-js";
 import { supabase } from "../utils/supabaseClient";
 import Auth from "../components/Auth";
-import { Session } from "@supabase/gotrue-js";
+import App from "../components/App";
 
 type sessionState = [Session | null, Dispatch<SetStateAction<Session | null>>];
 
@@ -18,6 +19,7 @@ const Home: NextPage = () => {
     });
   }, []);
 
+  console.log("session", session);
   return (
     <>
       <Header height="">
@@ -25,7 +27,7 @@ const Home: NextPage = () => {
           NEX TODO
         </Title>
       </Header>
-      {!session && <Auth />}
+      {!session ? <Auth /> : <App />}
     </>
   );
 };

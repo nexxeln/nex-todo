@@ -8,6 +8,7 @@ import {
   Alert,
   Button,
 } from "@mantine/core";
+import { MdOutlineInfo } from "react-icons/md";
 import { supabase } from "../utils/supabaseClient";
 
 export default function Auth() {
@@ -68,7 +69,12 @@ export default function Auth() {
         </Button>
 
         {loaded && (
-          <Alert title="Check your email!" color="cyan" pt="lg">
+          <Alert
+            icon={<MdOutlineInfo color="cyan" />}
+            title="Check your email!"
+            color="white"
+            pt="lg"
+          >
             {" "}
           </Alert>
         )}
